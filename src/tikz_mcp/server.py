@@ -13,6 +13,18 @@ from pathlib import Path
 
 from mcp.server.fastmcp import FastMCP
 
+# Directory containing this file (used to locate STYLE_GUIDE.md)
+_PKG_DIR = Path(__file__).resolve().parent
+_PROJECT_DIR = _PKG_DIR.parent.parent
+
+
+def _load_style_guide() -> str:
+    """Load the style guide from STYLE_GUIDE.md bundled with the project."""
+    style_path = _PROJECT_DIR / "STYLE_GUIDE.md"
+    if style_path.exists():
+        return style_path.read_text(encoding="utf-8")
+    return ""
+
 # Default preamble for standalone TikZ documents
 DEFAULT_PREAMBLE = r"""\usepackage{tikz}
 \usepackage{amsmath,amssymb}
@@ -36,14 +48,20 @@ DEFAULT_PREAMBLE = r"""\usepackage{tikz}
 # Output DPI for PNG rendering
 OUTPUT_DPI = 1000
 
+_STYLE_GUIDE = _load_style_guide()
+
+_INSTRUCTIONS = (
+    "This server compiles TikZ code into high-resolution PNG images. "
+    "Use the compile_tikz tool to render TikZ diagrams. "
+    "You can pass raw TikZ commands (they will be auto-wrapped in a "
+    "standalone document) or a full LaTeX document.\n\n"
+    "IMPORTANT: You MUST follow the style guide below when writing TikZ code.\n\n"
+    + _STYLE_GUIDE
+)
+
 mcp = FastMCP(
     name="tikz-mcp",
-    instructions=(
-        "This server compiles TikZ code into high-resolution PNG images. "
-        "Use the compile_tikz tool to render TikZ diagrams. "
-        "You can pass raw TikZ commands (they will be auto-wrapped in a "
-        "standalone document) or a full LaTeX document."
-    ),
+    instructions=_INSTRUCTIONS,
 )
 
 
@@ -55,7 +73,7 @@ def _is_full_document(code: str) -> bool:
 def _wrap_tikz(tikz_code: str, preamble: str) -> str:
     """Wrap raw TikZ code in a standalone LaTeX document."""
     return (
-        r"\documentclass[border=5pt]{standalone}"
+        r"\documentclass[border=8pt]{standalone}"
         "\n"
         f"{preamble}\n"
         r"\begin{document}"
