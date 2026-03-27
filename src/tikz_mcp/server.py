@@ -182,23 +182,24 @@ async def compile_tikz(
         if not os.path.exists(pdf_path):
             return "Error: PDF was not generated despite successful compilation."
 
-        # Convert PDF to PNG using pdftoppm (from poppler)
-        # -r: resolution in DPI, -png: output format, -singlefile: one output file
-        png_base = os.path.join(tmpdir, "tikz_output")
+        # Convert PDF to PNG with transparent background using Ghostscript
+        # -sDEVICE=pngalpha: PNG output with alpha channel (transparent bg)
+        # -r: resolution in DPI, -dBATCH -dNOPAUSE: non-interactive mode
+        tmp_png_path = os.path.join(tmpdir, "tikz_output.png")
         convert_cmd = [
-            "pdftoppm",
-            "-r", str(OUTPUT_DPI),
-            "-png",
-            "-singlefile",
+            "gs",
+            "-dNOPAUSE",
+            "-dBATCH",
+            "-dSAFER",
+            "-sDEVICE=pngalpha",
+            f"-r{OUTPUT_DPI}",
+            f"-sOutputFile={tmp_png_path}",
             pdf_path,
-            png_base,
         ]
         returncode, output = await _run_process(convert_cmd, cwd=tmpdir)
         if returncode != 0:
             return f"PDF to PNG conversion failed:\n{output}"
 
-        # pdftoppm outputs to <base>.png
-        tmp_png_path = png_base + ".png"
         if not os.path.exists(tmp_png_path):
             return "Error: PNG was not generated from PDF."
 

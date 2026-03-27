@@ -7,7 +7,7 @@ A lightweight MCP (Model Context Protocol) server that compiles TikZ code into h
 - **Single tool**: `compile_tikz` -- pass TikZ code, get a PNG image
 - **Auto-wrapping**: Raw TikZ commands are automatically wrapped in a `standalone` document
 - **Custom preamble**: Pass your own `\usepackage` / `\usetikzlibrary` commands
-- **High resolution**: Output at 1000 DPI by default
+- **High resolution**: Output at 1000 DPI by default, with **transparent background**
 - **Graceful errors**: LaTeX compilation errors are captured and returned as readable messages
 - **Style guide**: Built-in aesthetic rules injected into AI instructions for consistent, publication-quality output
 - **Self-verification**: AI is instructed to inspect its own output and fix issues before presenting to the user
@@ -17,7 +17,7 @@ A lightweight MCP (Model Context Protocol) server that compiles TikZ code into h
 
 - **Python** >= 3.10
 - **LaTeX**: `pdflatex` in PATH (e.g. via [MacTeX](https://www.tug.org/mactex/) or TeX Live)
-- **Poppler**: `pdftoppm` in PATH (install via `brew install poppler`)
+- **Poppler**: `pdftoppm` in PATH (install via `brew install poppler`), OR **Ghostscript** `gs` in PATH (ships with MacTeX)
 
 ## Installation
 
