@@ -56,6 +56,15 @@ _INSTRUCTIONS = (
     "You can pass raw TikZ commands (they will be auto-wrapped in a "
     "standalone document) or a full LaTeX document.\n\n"
     "IMPORTANT: You MUST follow the style guide below when writing TikZ code.\n\n"
+    "# Self-Verification Workflow\n\n"
+    "After EVERY call to compile_tikz, you MUST:\n"
+    "1. View the generated PNG image to inspect the output.\n"
+    "2. Check for: label overlaps, disproportionate aspect ratios, "
+    "curves that violate physical/mathematical laws, elements crowded "
+    "into a narrow band, and any deviation from the style guide.\n"
+    "3. If ANY issue is found, fix the TikZ code and recompile. "
+    "Repeat until the output is correct.\n"
+    "4. Only present the final verified image to the user.\n\n"
     + _STYLE_GUIDE
 )
 

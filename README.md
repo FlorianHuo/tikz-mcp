@@ -9,6 +9,8 @@ A lightweight MCP (Model Context Protocol) server that compiles TikZ code into h
 - **Custom preamble**: Pass your own `\usepackage` / `\usetikzlibrary` commands
 - **High resolution**: Output at 1000 DPI by default
 - **Graceful errors**: LaTeX compilation errors are captured and returned as readable messages
+- **Style guide**: Built-in aesthetic rules injected into AI instructions for consistent, publication-quality output
+- **Self-verification**: AI is instructed to inspect its own output and fix issues before presenting to the user
 - **Zero idle cost**: Uses stdio transport -- no background process when not in use
 
 ## Prerequisites
@@ -118,6 +120,14 @@ Override by passing a custom `preamble` parameter.
 MIT
 
 ## Changelog
+
+### v0.2.0
+
+- Embedded `STYLE_GUIDE.md` into server instructions with inline code patterns and anti-patterns
+- Added physical/mathematical accuracy rules (real hyperbolas, correct slopes)
+- Added TikZ pitfalls section (dimension overflow, hatched fill workarounds)
+- Added self-verification workflow: AI must inspect output and fix issues before presenting
+- Default `standalone` border changed from 5pt to 8pt
 
 ### v0.1.0
 
